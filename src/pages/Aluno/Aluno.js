@@ -9,50 +9,50 @@ import SenaiLogo from '../../assets/imagens/logosenai.png';
 import seta from '../../assets/imagens/icone-voltar.png';
 
 const AlunoHeader = ({ navigate, usuarioNome }) => { 
-    return React.createElement(
-        'div',
-        { className: 'aluno-header-full' },
-        [
-            React.createElement(
-                'div',
-                { className: 'aluno-header-left' },
-                [
-                    React.createElement('img', {
-                        src: seta,
-                        alt: 'Voltar',
-                        className: 'seta-voltar',
-                        onClick: () => navigate('/')
-                    }),
-                    React.createElement('img', {
-                        src: SenaiLogo,
-                        alt: 'Logo SENAI',
-                        className: 'senai-logo-img'
-                    }),
-                    React.createElement(
-                        'div',
-                        null,
-                        [
-                            React.createElement('h1', null, 'Painel do Aluno'),
-                            React.createElement('span', null, `Bem-Vindo(a), ${usuarioNome || 'Usuário'}`) 
-                        ]
-                    )
-                ]
-            ),
-            React.createElement(
-                'div',
-                { className: 'aluno-header-right' },
-                [
-                    React.createElement('button', {
-                        className: 'btn-sair',
-                        onClick: () => {
-                            localStorage.removeItem('usuarioLogado');
-                            navigate('/');
-                        }
-                    }, 'Sair')
-                ]
-            )
-        ]
-    );
+    return React.createElement(
+        'div',
+        { className: 'aluno-header-full' },
+        [
+            React.createElement(
+                'div',
+                { className: 'aluno-header-left' },
+                [
+                    React.createElement('img', {
+                        src: seta,
+                        alt: 'Voltar',
+                        className: 'seta-voltar',
+                        onClick: () => navigate('/')
+                    }),
+                    React.createElement('img', {
+                        src: SenaiLogo,
+                        alt: 'Logo SENAI',
+                        className: 'senai-logo-img'
+                    }),
+                    React.createElement(
+                        'div',
+                        null,
+                        [
+                            React.createElement('h1', null, 'Painel do Aluno'),
+                            React.createElement('span', null, `Bem-Vindo(a), ${usuarioNome || 'Usuário'}`) 
+                        ]
+                    )
+                ]
+            ),
+            React.createElement(
+                'div',
+                { className: 'aluno-header-right' },
+                [
+                    React.createElement('button', {
+                        className: 'btn-sair',
+                        onClick: () => {
+                            localStorage.removeItem('usuarioLogado');
+                            navigate('/');
+                        }
+                    }, 'Sair')
+                ]
+            )
+        ]
+    );
 };
 
 const DetalhesModal = ({ item, fecharVisualizacao, traduzirTipo, getAlunoStatus }) => {
@@ -149,74 +149,72 @@ function Aluno() {
         return data.toLocaleDateString("pt-BR");
     };
 
-    const obterNomeExibicao = (usuario) => {
-        if (!usuario) return 'Usuário';
-        if (usuario.nome && usuario.nome.toString().trim().length > 0) return usuario.nome;
-        if (usuario.email) {
-            const parte = usuario.email.split('@')[0];
-            const nomeFormatado = parte.replace(/[._]/g, ' ')
-                .split(' ')
-                .filter(Boolean)
-                .map(s => s.charAt(0).toUpperCase() + s.slice(1))
-                .join(' ');
-            return nomeFormatado || usuario.email;
-        }
-        return 'Usuário';
-    };
+    const obterNomeExibicao = (usuario) => {
+        if (!usuario) return 'Usuário';
+        if (usuario.nome && usuario.nome.toString().trim().length > 0) return usuario.nome;
+        if (usuario.email) {
+            const parte = usuario.email.split('@')[0];
+            const nomeFormatado = parte.replace(/[._]/g, ' ')
+                .split(' ')
+                .filter(Boolean)
+                .map(s => s.charAt(0).toUpperCase() + s.slice(1))
+                .join(' ');
+            return nomeFormatado || usuario.email;
+        }
+        return 'Usuário';
+    };
 
-    const carregarManifestacoes = async (email) => {
-        try {
-            // Tenta buscar do backend primeiro
-            const manifestacoesBackend = await manifestacoesService.listarManifestacoes();
-            
-            // Converte para o formato esperado pelo frontend
-            const manifestacoesFormatadas = manifestacoesBackend.map(m => ({
-                id: m.id.toString(),
-                tipo: manifestacoesService.formatarTipo(m.tipo),
-                dataCriacao: m.dataHora,
-                status: manifestacoesService.formatarStatus(m.status),
-                descricao: m.descricaoDetalhada,
-                respostaAdmin: m.observacao || '',
-                localIncidente: m.local,
-                usuarioEmail: m.emailUsuario,
-                contacto: m.emailUsuario
-            }));
+    const carregarManifestacoes = async (email) => {
+        try {
+            const manifestacoesBackend = await manifestacoesService.listarManifestacoes();
+            
+            const manifestacoesFormatadas = manifestacoesBackend.map(m => ({
+                id: m.id.toString(),
+                tipo: manifestacoesService.formatarTipo(m.tipo),
+                dataCriacao: m.dataHora,
+                status: manifestacoesService.formatarStatus(m.status),
+                descricao: m.descricaoDetalhada,
+                respostaAdmin: m.observacao || '',
+                localIncidente: m.local,
+                usuarioEmail: m.emailUsuario,
+                contacto: m.emailUsuario
+            }));
 
-            // Ordena por data de criação (mais recente primeiro)
-            const manifestacoesOrdenadas = manifestacoesFormatadas.sort((a, b) => 
-                new Date(b.dataCriacao) - new Date(a.dataCriacao)
-            );
+            const manifestacoesDoAluno = manifestacoesFormatadas.filter(m => m.usuarioEmail === email);
 
-            setManifestacoes(manifestacoesOrdenadas);
-        } catch (error) {
-            console.error("Erro ao carregar manifestações do backend:", error);
-            
-            // Fallback para localStorage se o backend falhar
-            const STATUS = CrudService.STATUS_MANIFESTACAO;
-            const TIPOS = CrudService.TIPOS_MANIFESTACAO;
+            const manifestacoesOrdenadas = manifestacoesDoAluno.sort((a, b) => 
+                new Date(b.dataCriacao) - new Date(a.dataCriacao)
+            );
 
-            let dadosSimulados = [];
-            let dados = CrudService.getByEmail(email) || [];
+            setManifestacoes(manifestacoesOrdenadas);
+        } catch (error) {
+            console.error("Erro ao carregar manifestações do backend:", error);
+            
+            const STATUS = CrudService.STATUS_MANIFESTACAO;
+            const TIPOS = CrudService.TIPOS_MANIFESTACAO;
 
-            if (STATUS && TIPOS && dados.length === 0 && email === 'gomes@aluno.senai.br') {
-                dadosSimulados = [{
-                    id: '987654321',
-                    tipo: TIPOS.ELOGIO,
-                    dataCriacao: '2025-10-12T10:00:00.000Z',
-                    status: STATUS.PENDENTE,
-                    descricao: 'mm' + 'm'.repeat(100),
-                    respostaAdmin: '', 
-                    localIncidente: 'Sala de aula',
-                    usuarioEmail: email, 
-                    contacto: email 
-                }];
-                dados = dadosSimulados;
-            }
+            let dadosSimulados = [];
+            let dados = CrudService.getByEmail(email) || [];
 
-            const manifestacoesOrdenadas = dados.sort((a, b) => new Date(b.dataCriacao) - new Date(a.dataCriacao));
-            setManifestacoes(manifestacoesOrdenadas);
-        }
-    };
+            if (STATUS && TIPOS && dados.length === 0 && email === 'gomes@aluno.senai.br') {
+                dadosSimulados = [{
+                    id: '987654321',
+                    tipo: TIPOS.ELOGIO,
+                    dataCriacao: '2025-10-12T10:00:00.000Z',
+                    status: STATUS.PENDENTE,
+                    descricao: 'mm' + 'm'.repeat(100),
+                    respostaAdmin: '', 
+                    localIncidente: 'Sala de aula',
+                    usuarioEmail: email, 
+                    contacto: email 
+                }];
+                dados = dadosSimulados;
+            }
+
+            const manifestacoesOrdenadas = dados.sort((a, b) => new Date(b.dataCriacao) - new Date(a.dataCriacao));
+            setManifestacoes(manifestacoesOrdenadas);
+        }
+    };
 
     useEffect(() => {
         const storedUser = localStorage.getItem("usuarioLogado");
@@ -320,13 +318,13 @@ function Aluno() {
         return React.createElement('div', {className: 'aluno-container'}, 'Carregando painel...');
     }
 
-    return React.createElement(
-        "div",
-        { className: "aluno-container" },
-        React.createElement(AlunoHeader, {
-            navigate: navigate,
-            usuarioNome: obterNomeExibicao(usuarioLogado)
-        }),
+    return React.createElement(
+        "div",
+        { className: "aluno-container" },
+        React.createElement(AlunoHeader, {
+            navigate: navigate,
+            usuarioNome: obterNomeExibicao(usuarioLogado)
+        }),
         React.createElement('div', { className: 'linha-vermelha' }),
 
         React.createElement(
