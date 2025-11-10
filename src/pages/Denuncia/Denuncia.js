@@ -1,4 +1,14 @@
-// ... (mantenha os imports e o novo 'import IconeAnexo...')
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+// Importações de Componentes, Serviços e Imagens
+import IconeAnexo from '../../assets/imagens/icone-anexo.png'; // Verifique se o caminho e nome do arquivo estão EXATOS
+import { manifestacoesService } from '../../services/manifestacoesService';
+import Footer from '../../Components/Footer';
+import HeaderSimples from '../../Components/HeaderSimples';
+import SetaVoltar from '../../Components/SetaVoltar';
+
+import '../Denuncia/Denuncia.css';
 
 function Denuncia() {
   const navigate = useNavigate();
