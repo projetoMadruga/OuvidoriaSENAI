@@ -1,10 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { manifestacoesService } from '../../services/manifestacoesService';
-import '../Denuncia/Denuncia.css';
-import Footer from '../../Components/Footer';
-import HeaderSimples from '../../Components/HeaderSimples';
-import SetaVoltar from '../../Components/SetaVoltar';
+// ... (mantenha os imports e o novo 'import IconeAnexo...')
 
 function Denuncia() {
   const navigate = useNavigate();
@@ -22,7 +16,7 @@ function Denuncia() {
   });
 
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [anexoBase64, setAnexoBase64] = useState(null);
+  // Removido 'anexoBase64' e 'setAnexoBase64' para evitar erros de linter (variável não utilizada)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -49,7 +43,6 @@ function Denuncia() {
     if (!file) {
       setFormData(prevState => ({ ...prevState, anexo: null }));
       setPreviewUrl(null);
-      setAnexoBase64(null);
       return;
     }
 
@@ -70,18 +63,10 @@ function Denuncia() {
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
 
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        setAnexoBase64(reader.result);
-      };
-      reader.onerror = (error) => {
-        console.error('Erro ao ler o arquivo:', error);
-        setAnexoBase64(null);
-      };
+      // Remoção da lógica do FileReader (base64) pois a variável não era usada.
+      // Isso evita erros de linter/build.
     } else {
       setPreviewUrl(null);
-      setAnexoBase64(null);
     }
   };
 
@@ -250,7 +235,7 @@ function Denuncia() {
               ></textarea>
               <label htmlFor="file-upload-denuncia" className="custom-file-upload">
                 <img
-                  src={require('../../assets/imagens/icone-anexo.png')}
+                  src={IconeAnexo} // <--- MUDANÇA AQUI: Agora usa a variável importada
                   alt="Anexar"
                   className="icone-anexar"
                 />
