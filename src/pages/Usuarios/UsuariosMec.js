@@ -133,6 +133,7 @@ function UsuariosMec() {
 
     const ADMIN_EMAILS = ['pino@senai.br', 'pino@docente.senai.br'];
 
+   
     useEffect(() => {
         let usuario = null;
         try {
@@ -165,7 +166,7 @@ function UsuariosMec() {
         
         setUsuarios(usuariosFiltrados);
         
-    }, [navigate]);
+    }, [navigate, normalizeString, CrudServiceSimulado.getAllUsers, ADMIN_EMAILS]); 
 
     const filtrarPorTipo = (lista, tipo) => {
         if (tipo === 'Todos') return lista;

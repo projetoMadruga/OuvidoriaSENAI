@@ -151,7 +151,7 @@ function Funcionario() {
           
             const manifestacoesBackend = await manifestacoesService.listarManifestacoes();
             
-           
+            
             const manifestacoesFormatadas = manifestacoesBackend.map(m => {
                 const setorOverrides = localStorage.getItem('setorOverridesById');
                 const setorMap = setorOverrides ? JSON.parse(setorOverrides) : {};
@@ -171,7 +171,7 @@ function Funcionario() {
                 };
             });
 
-           
+            
             const manifestacoesOrdenadas = manifestacoesFormatadas.sort((a, b) => 
                 new Date(b.dataCriacao) - new Date(a.dataCriacao)
             );
@@ -180,17 +180,16 @@ function Funcionario() {
 
         } catch (error) {
             console.error("Erro ao carregar manifestações do backend. Tentando fallback para localStorage:", error);
-         
+          
             const dados = CrudService.getByEmail(usuario.email) || [];
             
             
-
             const manifestacoesOrdenadas = dados.sort((a, b) => new Date(b.dataCriacao) - new Date(a.dataCriacao));
             setManifestacoes(manifestacoesOrdenadas);
         }
-    }, [getFuncionarioStatus]); 
+    }, []);
 
-   
+    
     useEffect(() => {
         const storedUser = localStorage.getItem("usuarioLogado");
         let usuario = null;
@@ -292,6 +291,8 @@ function Funcionario() {
                 <div className='funcionario-summary-cards'>
                     {[
                         { label: 'Total de Manifestações', value: total, className: 'card-total' },
+                   
+                        { label: 'Pendentes', value: pendente, className: 'card-pendente' }, 
                         { label: 'Em Análise', value: emAnalise, className: 'card-analise' },
                         { label: 'Resolvidas', value: resolvido, className: 'card-resolvidas' },
                     ].map((item, index) => (
