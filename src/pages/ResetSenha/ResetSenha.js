@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import { api } from '../../services/api';
-
 
 const useSearchParams = () => [new URLSearchParams(window.location.search)];
 
 const useNavigate = () => (path) => console.log(`[NAVIGATE SIMULADO] Redirecionando para: ${path}`);
 
 const buildUrl = (path) => {
-  
     const API_BASE = "http://mock-api-base.com" || ""; 
     if (!API_BASE) return path; 
     if (path.startsWith("http")) return path;
@@ -25,7 +21,6 @@ const mockFetch = (url, options) => {
 
     return new Promise((resolve) => {
         setTimeout(() => {
-            
             if (token && novaSenha.length >= 8 && novaSenha.includes('!')) {
                 resolve({ 
                     ok: true, 
@@ -34,23 +29,21 @@ const mockFetch = (url, options) => {
                     text: () => Promise.resolve('Password successfully reset.') 
                 });
             } else {
-              
                 resolve({ 
                     ok: false, 
                     status: 400, 
                     statusText: 'Bad Request', 
-                    text: () => Promise.resolve('Token expirado/inválido ou senha fraca (MOCK).') 
+                    text: () => Promise.resolve('Token expirado/inválido ou senha fraca (MOCK: precisa de "!").') 
                 });
             }
         }, 1500);
     });
 };
 
-
 const { createElement: e } = React;
 
 function ResetSenha() {
-  
+    
     const [searchParams] = useSearchParams();
     const navigate = useNavigate(); 
     
@@ -62,7 +55,6 @@ function ResetSenha() {
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-       
         const t = searchParams.get('token') || ''; 
         console.log('Token capturado da URL:', t);
         setToken(t);
@@ -72,9 +64,8 @@ function ResetSenha() {
         e.preventDefault();
         setError('');
         
-       
         if (!token) {
-            setError('Token inválido ou ausente.');
+            setError('Token inválido ou ausente. Verifique o link de redefinição.');
             return;
         }
         if (!novaSenha || novaSenha.length < 8) {
@@ -88,8 +79,7 @@ function ResetSenha() {
 
         setLoading(true);
         try {
-            console.log('Enviando payload:', { token, novaSenha });
-            
+            console.log('Enviando payload:', { token, novaSenha: '***(oculto)***' });
             
             const response = await mockFetch(buildUrl('/login/redefinir-senha'), {
                 method: 'POST',
@@ -106,7 +96,7 @@ function ResetSenha() {
                 console.log('Senha redefinida com sucesso:', responseText);
                 setSuccess(true);
                 setError(''); 
-              
+                
                 setTimeout(() => navigate('/'), 3000); 
             } else {
                 const errorText = await response.text();
@@ -126,15 +116,14 @@ function ResetSenha() {
         }
     };
 
- 
     return e('div', { className: 'min-h-screen flex items-center justify-center p-4 bg-gray-100 font-[Inter]' }, [
         e('script', { key: 'tailwind', src: 'https://cdn.tailwindcss.com' }),
 
         e('div', { className: 'w-full max-w-md p-8 bg-white shadow-2xl rounded-xl transition-all duration-300 border-t-4 border-indigo-600' }, [
             e('h1', { key: 'main-title', className: 'text-3xl font-bold text-center text-gray-800 mb-6 border-b pb-4' }, 'Redefinir Senha'),
             
-            e('p', { key: 'debug-token', className: 'text-sm text-center text-indigo-500 mb-4 bg-indigo-50 p-2 rounded-lg' }, 
-                `Token Atual: **${token || 'Nenhum token encontrado na URL'}**`
+            e('p', { key: 'debug-token', className: 'text-sm text-center text-indigo-500 mb-4 bg-indigo-50 p-2 rounded-lg break-all' }, 
+                `Token da URL: ${token || 'Nenhum'}`
             ),
 
             success
@@ -144,7 +133,7 @@ function ResetSenha() {
                     e('p', { key: 'success-msg2', className: 'text-base text-gray-600' }, 'Redirecionando para a página inicial...')
                 ])
                 : e('form', { key: 'form', onSubmit: handleSubmit, className: 'space-y-6' }, [
-                   
+                    
                     e('div', { key: 'senha' }, [
                         e('label', { htmlFor: 'novaSenha', className: 'block text-sm font-medium text-gray-700 mb-2' }, 'Nova senha'),
                         e('input', {
@@ -158,7 +147,7 @@ function ResetSenha() {
                             placeholder: 'Mínimo 8 caracteres',
                         })
                     ]),
-                   
+                    
                     e('div', { key: 'confirm' }, [
                         e('label', { htmlFor: 'confirmacao', className: 'block text-sm font-medium text-gray-700 mb-2' }, 'Confirmar nova senha'),
                         e('input', {
@@ -173,10 +162,8 @@ function ResetSenha() {
                         })
                     ]),
                     
-                   
                     error && e('div', { key: 'err', className: 'text-sm font-semibold p-4 bg-red-50 text-red-700 rounded-lg border border-red-300 shadow-inner' }, error),
                     
-               
                     e('button', { 
                         key: 'submit', 
                         type: 'submit', 
@@ -195,13 +182,12 @@ function ResetSenha() {
                     ),
 
                     e('p', { key: 'test-note', className: 'text-xs text-gray-500 text-center mt-4' }, 
-                        '*Para teste, o token deve estar presente na URL e a senha deve conter o caractere \'!\' para simular o sucesso.'
+                        '*Para teste, o token deve estar presente na URL e a nova senha deve conter o caractere \'!\' (ex: "Senha!123") para simular o sucesso.'
                     )
                 ])
-           
+            
             ]), 
         ])
- 
 }
 
 export default ResetSenha;
