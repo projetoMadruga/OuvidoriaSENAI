@@ -44,12 +44,14 @@
     margin: 0;
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin-top: 0;
+    /* Mantendo a sua margem local para evitar o bug de -40px */
+    margin-top: 0; 
 }
 
 .texto-bemvindo h2 {
     font-size: 28px;
     font-weight: bold;
+    /* Mantendo a sua max-width local, 60% parece mais razoável */
     max-width: 60%; 
 }
 
@@ -87,6 +89,7 @@
     width: 90%;
     max-width: 1100px;
     flex-wrap: wrap;
+    /* Mantendo o alinhamento central */
     align-items: center; 
 }
 
@@ -115,7 +118,6 @@
 .contato-rodape {
     margin-top: 10px;
 }
-
 
 
 @media (max-width: 768px) {
@@ -168,7 +170,6 @@
         padding: 0 10px;
         width: 100%;
     }
-
 
     .botao-horario {
         width: 80%;

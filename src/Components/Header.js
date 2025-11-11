@@ -17,6 +17,7 @@ const getNomeUsuarioLogado = () => {
                 return usuarioLogado.nome;
             }
             
+
             if (usuarioLogado.email) {
                 const parte = usuarioLogado.email.split('@')[0];
                 const nomeFormatado = parte.replace(/[._]/g, ' ')
@@ -24,7 +25,7 @@ const getNomeUsuarioLogado = () => {
                     .filter(Boolean)
                     .map(s => s.charAt(0).toUpperCase() + s.slice(1))
                     .join(' ');
-                
+
                 return nomeFormatado || usuarioLogado.email;
             }
         }
@@ -51,11 +52,13 @@ function Header() {
         return () => window.removeEventListener('storage', checkLoginStatus);
     }, [checkLoginStatus]);
 
+
     const handleCloseModal = (isSuccessfulLogin = false) => {
         setModalAberto('');
         if (isSuccessfulLogin) {
             checkLoginStatus();
         }
+
     };
 
     const menuItems = [
@@ -78,6 +81,7 @@ function Header() {
 
                 if (!email) return navigate('/');
 
+
                 if (email === "pino@docente.senai.br" || email === "pino@senai.br") return navigate("/admin/adm-mec");
                 if (email === "chile@docente.senai.br" || email === "chile@senai.br") return navigate("/admin/adm-info");
                 if (email === "diretor@senai.br") return navigate("/admin");
@@ -89,6 +93,7 @@ function Header() {
                 navigate('/');
             } catch (error) {
                 console.error("Erro ao fazer parse do usuário logado no clique:", error);
+
                 setModalAberto('login');
             }
         } else {

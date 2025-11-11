@@ -32,6 +32,7 @@ function Elogio() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  
   useEffect(() => {
     if (usuarioLogado) {
       setFormData(prevState => ({
@@ -40,7 +41,13 @@ function Elogio() {
         contato: usuarioLogado.email || '',
       }));
     }
-  }, [usuarioLogado]);
+    // Cleanup function para revogar o URL de preview quando o componente for desmontado
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [usuarioLogado, previewUrl]);
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -62,7 +69,7 @@ function Elogio() {
 
     if (file.size > MAX_SIZE) {
       alert('O arquivo é muito grande. O tamanho máximo é 5MB.');
-      e.target.value = null;
+      e.target.value = null; // Limpa o input file
       setFormData(prevState => ({ ...prevState, anexo: null }));
       setPreviewUrl(null);
       return;
@@ -73,6 +80,7 @@ function Elogio() {
       anexo: file
     }));
 
+    // Revoga o URL anterior antes de criar um novo
     if (previewUrl) {
       URL.revokeObjectURL(previewUrl);
     }
@@ -85,13 +93,6 @@ function Elogio() {
     }
   }, [previewUrl]);
 
-  useEffect(() => {
-    return () => {
-      if (previewUrl) {
-        URL.revokeObjectURL(previewUrl);
-      }
-    };
-  }, [previewUrl]);
 
   const validarCamposComuns = useCallback(() => {
     if (!formData.descricao || formData.descricao.trim() === '') {
@@ -152,6 +153,7 @@ function Elogio() {
       const criado = await manifestacoesService.criarElogio(formDataToSend);
 
       try {
+        // Lógica de salvar setor no localStorage (mantida de ambos os lados)
         if (criado && criado.id) {
           const raw = localStorage.getItem('setorOverridesById');
           const map = raw ? JSON.parse(raw) : {};
@@ -171,7 +173,7 @@ function Elogio() {
     } finally {
       setLoading(false);
     }
-  }, [formData, navigate, validarCamposComuns, previewUrl]);
+  }, [formData, navigate, validarCamposComuns]);
 
   return (
     <div className="elogio-container">

@@ -42,10 +42,11 @@ function Sugestao() {
         contato: usuarioLogado.email || '', 
       }));
     }
+    // Cleanup function para revogar o URL de preview quando o componente for desmontado
     return () => {
         if (previewUrl) URL.revokeObjectURL(previewUrl);
     };
-  }, [usuarioLogado]); 
+  }, [usuarioLogado, previewUrl]); 
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -67,7 +68,7 @@ function Sugestao() {
 
     if (file.size > MAX_SIZE) {
       alert('O arquivo é muito grande. O tamanho máximo é 5MB.');
-      e.target.value = null;
+      e.target.value = null; // Limpa o input file
       setFormData(prevState => ({ ...prevState, anexo: null }));
       setPreviewUrl(null);
       return;
@@ -78,6 +79,7 @@ function Sugestao() {
       anexo: file
     }));
 
+    // Revoga o URL anterior antes de criar um novo
     if (previewUrl) {
       URL.revokeObjectURL(previewUrl);
     }
@@ -99,6 +101,7 @@ function Sugestao() {
     if (formData.dataHora) {
         const dataIncidente = new Date(formData.dataHora);
         const dataAtual = new Date();
+        // Zera milissegundos e segundos para comparação
         dataAtual.setMilliseconds(0); 
         dataIncidente.setSeconds(0);
     
@@ -133,6 +136,7 @@ function Sugestao() {
         ? manifestacoesService.formatarDataHora(formData.dataHora) 
         : manifestacoesService.formatarDataHora(new Date().toISOString().slice(0, 16));
         
+      // Usando FormData para enviar dados mistos (texto + arquivo)
       const formDataToSend = new FormData();
         
       formDataToSend.append('nome', finalNome);
@@ -143,6 +147,7 @@ function Sugestao() {
       formDataToSend.append('descricaoDetalhada', formData.descricao);
 
       if (formData.anexo) {
+          // Adiciona o arquivo com o nome original
           formDataToSend.append('anexo', formData.anexo, formData.anexo.name);
       }
       
@@ -283,7 +288,7 @@ function Sugestao() {
                 className="btn-confirmar"
                 disabled={loading}
               >
-                {loading ? 'Enviando...' : 'Confirmar'}
+                {loading && !formData.anexo ? 'Enviando...' : 'Confirmar'}
               </button>
               <button
                 type="button" 
@@ -292,7 +297,7 @@ function Sugestao() {
                 onClick={(e) => enviarSugestao(e, true)}
                 disabled={loading}
               >
-                {loading ? 'Enviando...' : 'Enviar Anônimo'}
+                {loading && !formData.anexo ? 'Enviando...' : 'Enviar Anônimo'}
               </button>
             </div>
           </form>

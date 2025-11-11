@@ -6,16 +6,20 @@ import Footer from '../../Components/Footer';
 import HeaderSimples from '../../Components/HeaderSimples';
 import SetaVoltar from '../../Components/SetaVoltar';
 
+
 import IconeAnexo from '../../assets/imagens/icone-anexo.png';
+
 
 function Reclamacao() {
   const navigate = useNavigate();
+
 
   const usuarioLogado = useMemo(() => {
     try {
       const storedUser = localStorage.getItem('usuarioLogado');
       return storedUser ? JSON.parse(storedUser) : null;
     } catch (e) {
+
       return null;
     }
   }, []);
@@ -34,6 +38,7 @@ function Reclamacao() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+
   useEffect(() => {
     if (usuarioLogado) {
       setFormData(prevState => ({
@@ -43,6 +48,7 @@ function Reclamacao() {
       }));
     }
   }, [usuarioLogado]);
+
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -67,6 +73,7 @@ function Reclamacao() {
       e.target.value = null;
       setFormData(prevState => ({ ...prevState, anexo: null }));
       setPreviewUrl(null);
+
       return;
     }
 
@@ -80,12 +87,14 @@ function Reclamacao() {
     }
 
     if (file.type.startsWith('image/')) {
+
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
     } else {
       setPreviewUrl(null);
     }
   }, [previewUrl]);
+
 
   useEffect(() => {
     return () => {
@@ -101,6 +110,7 @@ function Reclamacao() {
       return false;
     }
     if (!formData.local || formData.local.trim() === '') {
+
       alert('Por favor, preencha o local do incidente.');
       return false;
     }
@@ -119,6 +129,7 @@ function Reclamacao() {
         return false;
     }
 
+
     return true;
   }, [formData]);
 
@@ -130,6 +141,7 @@ function Reclamacao() {
     const finalContato = isAnonimo ? '' : formData.contato;
 
     if (!isAnonimo && !finalContato) {
+
       alert('Para envio identificado, o E-mail ou Telefone é obrigatório.');
       return;
     }
@@ -166,6 +178,7 @@ function Reclamacao() {
 
         alert(`Reclamação ${isAnonimo ? 'anônima ' : ''}enviada com sucesso!`);
         navigate('/confirmacao');
+
     } catch (err) {
       console.error(`Erro ao enviar reclamação ${isAnonimo ? 'anônima' : ''}:`, err);
       setError('Erro ao enviar reclamação. Tente novamente.');
@@ -184,6 +197,7 @@ function Reclamacao() {
     e.preventDefault(); 
     enviarReclamacao(true);
   }, [enviarReclamacao]);
+
 
 
   return (
@@ -224,6 +238,7 @@ function Reclamacao() {
               onChange={handleChange}
               placeholder="E-mail ou Telefone (obrigatório para envio identificado)"
               required
+
             />
             
             <label htmlFor="setor-select">Setor de Destino *</label>

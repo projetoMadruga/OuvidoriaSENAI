@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { manifestacoesService } from '../../services/manifestacoesService';
 import '../Denuncia/Denuncia.css';
+
 import Footer from '../../Components/Footer';
 import HeaderSimples from '../../Components/HeaderSimples';
 import SetaVoltar from '../../Components/SetaVoltar';
+
 
 function Denuncia() {
   const navigate = useNavigate();
@@ -311,6 +313,7 @@ function Denuncia() {
       <Footer />
     </div>
   );
+
 }
 
 export default Denuncia;
