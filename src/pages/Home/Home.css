@@ -1,0 +1,178 @@
+.actor-regular {
+    font-family: "Actor", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.home-container {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.banner-container {
+    position: relative;
+    width: 90%;
+    max-width: 1100px;
+    height: 500px;
+    margin: 40px auto 0;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.banner {
+    width: 100%;
+    height: 90%;
+    display: block;
+    border-radius: 3px;
+}
+
+.texto-bemvindo {
+    position: absolute;
+    top: 25%;
+    left: 5%;
+    color: white;
+    z-index: 2;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+    font-family: "Actor", sans-serif;
+}
+
+.texto-bemvindo h1 {
+    font-size: 20px;
+    font-weight: 300;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 0;
+}
+
+.texto-bemvindo h2 {
+    font-size: 28px;
+    font-weight: bold;
+    max-width: 60%; 
+}
+
+
+.conteudo-ouvidoria-principal {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+    gap: 40px;
+}
+
+.drop-area {
+    width: 60%;
+}
+
+.descricao {
+    width: 40%;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+    text-align: justify;
+    border-radius: 9px;
+    padding: 20px;
+    position: relative; 
+}
+
+.botoes-ouvidoria {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 40px auto;
+    width: 90%;
+    max-width: 1100px;
+    flex-wrap: wrap;
+    align-items: center; 
+}
+
+.botao-horario {
+    display: block;
+    margin: 20px auto;
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 30px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: fit-content; 
+}
+
+.icone-social {
+    width: 20px;
+    margin: 0 6px;
+    filter: grayscale(100%);
+}
+
+.info-rodape,
+.contato-rodape {
+    margin-top: 10px;
+}
+
+
+
+@media (max-width: 768px) {
+    
+    .banner-container {
+        height: auto; 
+        margin-top: 20px;
+        width: 100%;
+        max-width: none;
+    }
+    .banner {
+        height: auto;
+    }
+    .texto-bemvindo {
+        top: 20%; 
+        left: 50%;
+        transform: translate(-50%, -20%);
+        width: 90%;
+        text-align: center;
+    }
+    .texto-bemvindo h1 {
+        font-size: 1.5em;
+    }
+    .texto-bemvindo h2 {
+        font-size: 1em;
+        max-width: 100%;
+    }
+    
+    .conteudo-ouvidoria-principal {
+        flex-direction: column;
+        padding: 20px 15px;
+        width: 100%;
+        max-width: none;
+        margin: 20px auto;
+    }
+    
+    .drop-area, .descricao {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .descricao {
+        padding: 15px; 
+    }
+    
+    .botoes-ouvidoria {
+        flex-direction: row; 
+        justify-content: space-around;
+        gap: 10px; 
+        padding: 0 10px;
+        width: 100%;
+    }
+
+
+    .botao-horario {
+        width: 80%;
+        margin: 20px auto;
+        font-size: 0.9em;
+    }
+}

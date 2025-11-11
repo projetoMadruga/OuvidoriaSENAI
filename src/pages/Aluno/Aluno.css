@@ -1,0 +1,353 @@
+.aluno-container {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.linha-vermelha {
+    width: 100%;
+    height: 3px;
+    background-color: #b60000;
+}
+
+
+.aluno-header-full {
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.aluno-header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.senai-logo-img {
+    height: 30px !important; 
+    width: auto !important;
+    object-fit: contain;
+}
+
+.aluno-header-left h1 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    color: #333;
+}
+.aluno-header-left span {
+    font-size: 13px;
+    color: #555;
+    display: block;
+}
+
+.aluno-header-right .btn-sair {
+    background-color: #fff;
+    color: #383737;
+    border: 1px solid #a7a7a7;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+.aluno-header-right .btn-sair:hover {
+    background-color: #f5f5f5;
+}
+
+
+
+.aluno-main-content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+
+.aluno-summary-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.aluno-summary-cards .aluno-card {
+    background: #fff;
+    padding: 10px 25px;
+    border-radius: 8px;
+
+    flex: 1 1 0;
+
+    max-width: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    height: 90px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+}
+
+.aluno-summary-cards .aluno-card p {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #666;
+    font-weight: 500;
+}
+
+.aluno-summary-cards .aluno-card h3 {
+    font-size: 34px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 5px;
+}
+
+
+.minhas-manifestacoes-section-wrapper {
+    width: 100%;
+}
+
+.minhas-manifestacoes-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+.minhas-manifestacoes-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 5px;
+    color: #333;
+}
+.minhas-manifestacoes-card small {
+    font-size: 13px;
+    color: #888;
+    display: block;
+    margin-bottom: 20px;
+}
+
+
+.manifestacoes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.manifestacao-card-item {
+    background: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #ddd;
+    position: relative;
+}
+
+
+.manifestacao-card-info {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.tipo-e-data {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+
+.manifestacao-tipo {
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #b60000;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border-right: none;
+}
+
+.manifestacao-data {
+    font-size: 13px;
+    color: #555;
+    font-weight: 400;
+}
+
+
+.manifestacao-status {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-transform: capitalize;
+}
+.manifestacao-status.em-análise {
+    background-color: #ffc107;
+    color: #333;
+}
+.manifestacao-status.finalizada {
+    background-color: #e9ecef;
+    color: #333;
+}
+
+.manifestacao-problema {
+    font-size: 14px;
+    color: #444;
+    margin: 5px 0 15px;
+    font-weight: 500;
+    word-break: break-all;
+}
+
+.manifestacao-resposta {
+    background-color: #f7fff7;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    border: 1px solid #c8e6c9;
+}
+
+.manifestacao-resposta strong {
+    font-size: 14px;
+    color: #38703a;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.manifestacao-resposta p {
+    font-size: 14px;
+    color: #38703a;
+    margin: 0;
+}
+
+.btn-ver-detalhes {
+    background-color: transparent;
+    border: 1px solid #ccc;
+    color: #333;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+.btn-ver-detalhes:hover {
+    background-color: #f5f5f5;
+}
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.modal-content h3 {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #b60000;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.modal-content p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.modal-content strong {
+    font-weight: 600;
+    color: #333;
+}
+
+.modal-section {
+    margin-top: 15px;
+    padding: 10px 0;
+    border-top: 1px solid #f0f0f0;
+}
+.modal-section p {
+    margin-top: 5px;
+    color: #555;
+}
+
+.resposta-admin {
+    background-color: #f7fff7;
+    border: 1px solid #e6ffe6;
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+.resposta-admin strong, .resposta-admin p {
+    color: #38703a;
+}
+
+.btn-fechar-modal {
+    background-color: #b60000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 20px;
+    transition: background-color 0.2s;
+}
+.btn-fechar-modal:hover {
+    background-color: #8c0000;
+}
+
+
+
+@media (max-width: 768px) {
+    .aluno-header-full {
+        padding: 15px 15px;
+    }
+    .aluno-summary-cards {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .aluno-summary-cards .aluno-card {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+    .modal-content {
+        max-width: 90%;
+    }
+}

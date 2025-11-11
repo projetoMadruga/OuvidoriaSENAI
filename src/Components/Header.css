@@ -1,0 +1,120 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 15px 40px;
+    font-family: Arial, sans-serif;
+    height: 80px;
+    box-sizing: border-box;
+    position: relative; 
+    z-index: 10; 
+}
+
+.header-bottom-line {
+    position: absolute;
+    bottom: 0; 
+    left: 40px; 
+    right: 40px; 
+    height: 2px;
+    background-color: #f00; 
+    z-index: 1; 
+}
+
+.logo-senai {
+    height: 35px;
+    width: auto;
+    object-fit: contain;
+    cursor: pointer;
+    margin-left: -10px;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.nav-menu a {
+    font-size: 14px;
+    color: #2e2e2e;
+    text-decoration: none;
+    font-weight: normal;
+    padding: 4px 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-menu a:hover {
+    text-decoration: underline;
+}
+
+.nav-item.ativo {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 16px;
+}
+
+.divisor {
+    width: 1px;
+    height: 30px;
+    background-color: #ccc;
+    margin-right: 12px;
+}
+
+.icone-usuario {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    margin-right: 8px;
+}
+
+.sou-aluno {
+    font-size: 13px;
+    font-weight: bold;
+    color: #222;
+}
+
+
+@media (max-width: 768px) {
+    .header {
+        padding: 10px 15px; 
+        height: 55px; 
+    }
+
+    .logo-senai {
+        height: 25px; 
+        margin-left: 0;
+    }
+
+    .nav-menu {
+        display: none; 
+    }
+    
+    .usuario {
+        margin-left: auto; 
+    }
+    
+    .divisor {
+        display: none;
+    }
+    
+    .sou-aluno {
+        font-size: 11px;
+    }
+
+   
+    .header-bottom-line {
+        left: 0; 
+        right: 0;
+    }
+}
